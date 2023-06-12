@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'e-commerce MVVM',
       getPages: RoutesPage.pages,
-      initialRoute: RoutesName.profile,
+      initialRoute: RoutesName.myLocation,
     );
   }
 }
