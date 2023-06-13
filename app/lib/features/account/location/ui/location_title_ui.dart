@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../constants/location_bottom_sheet_configuration.dart';
 

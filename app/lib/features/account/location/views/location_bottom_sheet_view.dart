@@ -8,13 +8,10 @@ import '../view_models/location_bottom_sheet_view_model.dart';
 import '../constants/location_bottom_sheet_configuration.dart';
 import '../constants/location_bottom_sheet_text.dart';
 
-import '../repositories/location_repository.dart';
-
 class LocationBottomSheetView {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static Widget build({
     int? locationIndex,
-    required LocationRepository locationRepository,
   }) {
     final double bottomSheetHeight = Get.size.height * 0.935;
     return SizedBox(
@@ -24,7 +21,6 @@ class LocationBottomSheetView {
         init: Get.put<LocationBottomSheetViewModel>(
           LocationBottomSheetViewModel(
             index: locationIndex,
-            locationRepository: locationRepository,
           ),
         ),
         dispose: (state) => Get.delete<LocationBottomSheetViewModel>(),

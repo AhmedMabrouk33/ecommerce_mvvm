@@ -6,20 +6,20 @@ import 'package:image_picker/image_picker.dart';
 
 import 'profile_view_model.dart';
 
-import '../repositories/profile_repository.dart';
+// import '../repositories/profile_repository.dart';
 
 import '../../../../core/data/universal_data.dart';
 import '../constants/profile_build_id.dart';
 
+import '../../../../core/data/repository_configuration.dart';
+
 enum BottomSheetState { edit, fail, updating }
 
 abstract class ProfileEditViewModel extends GetxController {
-  final ProfileRepository profileRepository;
   String errorMessage;
   BottomSheetState bottomSheetState;
 
   ProfileEditViewModel({
-    required this.profileRepository,
     this.errorMessage = '',
     this.bottomSheetState = BottomSheetState.edit,
   });
@@ -47,7 +47,7 @@ class ProfileImageEditViewModel extends ProfileEditViewModel {
 
   XFile? _pickedImage;
 
-  ProfileImageEditViewModel({required super.profileRepository});
+  ProfileImageEditViewModel();
 
   @override
   void updateElement() async {
@@ -55,7 +55,7 @@ class ProfileImageEditViewModel extends ProfileEditViewModel {
       bottomSheetState = BottomSheetState.updating;
       update();
 
-      await profileRepository
+      await ApplicationRepositories.profileRepository
           .uploadNewImage(
         userId: userData.id.toString(),
         newImage: _pickedImage!.path,
@@ -102,7 +102,7 @@ class ProfileEmailEditViewModel extends ProfileEditViewModel {
   final TextEditingController textFieldController = TextEditingController();
   // final String label = 'Email';
 
-  ProfileEmailEditViewModel({required super.profileRepository});
+  ProfileEmailEditViewModel();
 
   @override
   void updateElement() async {
@@ -110,7 +110,7 @@ class ProfileEmailEditViewModel extends ProfileEditViewModel {
       bottomSheetState = BottomSheetState.updating;
       update();
 
-      await profileRepository
+      await ApplicationRepositories.profileRepository
           .uploadNewEmail(
         userId: userData.id.toString(),
         newEmail: _readEmail,
@@ -145,7 +145,7 @@ class ProfileNameEditViewModel extends ProfileEditViewModel {
   final TextEditingController textFieldController = TextEditingController();
   // final String label = 'Name';
 
-  ProfileNameEditViewModel({required super.profileRepository});
+  ProfileNameEditViewModel();
 
   @override
   void updateElement() async {
@@ -153,7 +153,7 @@ class ProfileNameEditViewModel extends ProfileEditViewModel {
       bottomSheetState = BottomSheetState.updating;
       update();
 
-      await profileRepository
+      await ApplicationRepositories.profileRepository
           .uploadNewName(
         userId: userData.id.toString(),
         newName: _readName,
@@ -188,14 +188,15 @@ class ProfilePasswordEditViewModel extends ProfileEditViewModel {
   final TextEditingController newTextFieldController = TextEditingController();
   final TextEditingController oldTextFieldController = TextEditingController();
 
-  ProfilePasswordEditViewModel({required super.profileRepository});
+  ProfilePasswordEditViewModel();
+
   @override
   void updateElement() async {
     if (_isValid()) {
       bottomSheetState = BottomSheetState.updating;
       update();
 
-      await profileRepository
+      await ApplicationRepositories.profileRepository
           .uploadNewPassword(
         userId: userData.id.toString(),
         oldPassword: _readOldPassword,

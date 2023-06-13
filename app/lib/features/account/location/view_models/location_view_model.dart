@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/data/universal_data.dart';
-import '../models/location_model.dart';
-import '../repositories/location_repository.dart';
+
+import '../../../../core/data/repository_configuration.dart';
 
 class _DialogTitle {
   static const String updateTitle = 'Requesting';
@@ -12,15 +12,11 @@ class _DialogTitle {
 }
 
 class LocationViewModel extends GetxController {
-  final LocationRepository locationRepository;
-
   bool isInDeleteAction = false;
 
   late int _selectedMainIndex;
 
-  LocationViewModel({
-    required this.locationRepository,
-  });
+  LocationViewModel();
 
   String locationControllerId(int index) => 'Location-$userLocations[index].id';
 
@@ -45,7 +41,7 @@ class LocationViewModel extends GetxController {
 
     _showSnackBar(_DialogTitle.updateTitle, null);
 
-    return await locationRepository
+    return await ApplicationRepositories.locationRepository
         .deleteLocation(userLocations[index].id)
         .then(
       (value) async {

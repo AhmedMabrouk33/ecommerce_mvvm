@@ -1,25 +1,26 @@
-import 'package:app/features/account/location/view_models/location_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constants/location_bottom_sheet_text.dart';
+
 import '../models/location_model.dart';
-import '../repositories/location_repository.dart';
+
+import '../view_models/location_view_model.dart';
 
 import '../../../../core/data/universal_data.dart';
+import '../../../../core/data/repository_configuration.dart';
 
 enum LocationBottomSheetState { edit, updating, fail }
 
 class LocationBottomSheetViewModel extends GetxController {
   final int? index;
-  final LocationRepository locationRepository;
+
   String errorMessage = '';
 
   late final String bottomSheetTitle;
 
   LocationBottomSheetViewModel({
     required this.index,
-    required this.locationRepository,
   });
 
   LocationBottomSheetState bottomSheetState = LocationBottomSheetState.edit;
@@ -82,11 +83,11 @@ class LocationBottomSheetViewModel extends GetxController {
       );
 
       (index == null
-              ? locationRepository.sendNewLocation(
+              ? ApplicationRepositories.locationRepository.sendNewLocation(
                   userId: userId,
                   newLocation: locationModel,
                 )
-              : locationRepository.updateLocation(
+              : ApplicationRepositories.locationRepository.updateLocation(
                   location: locationModel,
                 ))
           .then(

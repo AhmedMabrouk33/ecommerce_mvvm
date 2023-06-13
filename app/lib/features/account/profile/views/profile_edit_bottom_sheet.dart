@@ -1,15 +1,12 @@
-import 'package:app/features/account/profile/ui/profile_bottom_sheet_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../view_models/profile_edit_view_model.dart';
 
-import '../repositories/profile_repository.dart';
+import '../ui/profile_bottom_sheet_widgets.dart';
 
 class ProfileEditBottomSheet {
-  final ProfileRepository profileRepository;
-
-  const ProfileEditBottomSheet({required this.profileRepository});
+  const ProfileEditBottomSheet();
 
   Widget build(ProfileEditViewModel profileEditViewModel) {
     return profileEditViewModel is ProfileImageEditViewModel

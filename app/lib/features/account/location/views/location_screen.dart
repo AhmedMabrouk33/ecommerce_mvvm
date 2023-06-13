@@ -6,9 +6,7 @@ import '../constants/location_bottom_sheet_configuration.dart';
 
 import '../../../../utils/widgets/app_bar/stander_app_bar.dart';
 
-import '../repositories/location_test.dart';
 import '../view_models/location_view_model.dart';
-// import '../repositories/location_repository.dart';
 
 import '../ui/location_title_ui.dart';
 import '../ui/location_dialog_ui.dart';
@@ -45,9 +43,7 @@ class LocationScreen extends StatelessWidget {
                 Expanded(
                   child: GetBuilder<LocationViewModel>(
                     init: Get.put<LocationViewModel>(
-                      LocationViewModel(
-                        locationRepository: const LocationTest(),
-                      ),
+                      LocationViewModel(),
                     ),
                     builder: (controller) => controller.userLocationLength > 0
                         ? ListView.builder(
@@ -111,7 +107,7 @@ class LocationScreen extends StatelessWidget {
       isDismissible: true,
       LocationBottomSheetView.build(
         locationIndex: locationIndex,
-        locationRepository: Get.find<LocationViewModel>().locationRepository,
+        
       ),
     );
   }

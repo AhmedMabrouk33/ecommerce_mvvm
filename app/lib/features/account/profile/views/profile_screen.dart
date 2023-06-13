@@ -3,12 +3,9 @@ import 'package:get/get.dart';
 
 import '../../../../utils/widgets/app_bar/stander_app_bar.dart';
 
-import '../repositories/profile_test.dart';
-
 import '../constants/profile_build_id.dart';
 
 import '../view_models/profile_edit_view_model.dart';
-import '../view_models/profile_view_model.dart';
 
 import '../ui/profile_change_password.dart';
 import '../ui/profile_title_card.dart';
@@ -20,10 +17,9 @@ import '../../../../core/ui/universal_ui.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-  // final ProfileRepository _profileRepository = const ProfileTest();
 
   final ProfileEditBottomSheet _profileEditBottomSheet =
-      const ProfileEditBottomSheet(profileRepository: ProfileTest());
+      const ProfileEditBottomSheet();
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +43,7 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 50),
                   const ProfileImage().buildWidget(
                     () => _showBottomSheet(
-                      ProfileImageEditViewModel(
-                        profileRepository:
-                            _profileEditBottomSheet.profileRepository,
-                      ),
+                      ProfileImageEditViewModel(),
                     ),
                   ),
                   const SizedBox(height: 35),
@@ -60,10 +53,7 @@ class ProfileScreen extends StatelessWidget {
                     leadingIcon: Icons.account_box_outlined,
                   ).buildWidget(
                     () => _showBottomSheet(
-                      ProfileNameEditViewModel(
-                        profileRepository:
-                            _profileEditBottomSheet.profileRepository,
-                      ),
+                      ProfileNameEditViewModel(),
                     ),
                   ),
                   const SizedBox(height: 35),
@@ -73,19 +63,13 @@ class ProfileScreen extends StatelessWidget {
                     leadingIcon: Icons.email,
                   ).buildWidget(
                     () => _showBottomSheet(
-                      ProfileEmailEditViewModel(
-                        profileRepository:
-                            _profileEditBottomSheet.profileRepository,
-                      ),
+                      ProfileEmailEditViewModel(),
                     ),
                   ),
                   const SizedBox(height: 35),
                   const ProfileChangePassword().buildWidget(
                     () => _showBottomSheet(
-                      ProfilePasswordEditViewModel(
-                        profileRepository:
-                            _profileEditBottomSheet.profileRepository,
-                      ),
+                      ProfilePasswordEditViewModel(),
                     ),
                   ),
                 ],
