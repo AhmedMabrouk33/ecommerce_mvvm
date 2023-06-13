@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/ui/universal_ui.dart';
 import '../constants/location_bottom_sheet_configuration.dart';
 
 import '../../../../utils/widgets/app_bar/stander_app_bar.dart';
@@ -25,69 +26,75 @@ class LocationScreen extends StatelessWidget {
       onTap: _selectedMethodAction,
     );
     return Scaffold(
-      body: SafeArea(
-        child: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const StanderAppBar(title: 'Location'),
-              const SizedBox(height: 30),
-              Expanded(
-                child: GetBuilder<LocationViewModel>(
-                  init: Get.put<LocationViewModel>(
-                    LocationViewModel(
-                      locationRepository: const LocationTest(),
+      body: WillPopScope(
+        onWillPop: () async {
+          bottomNavBarController.popAction();
+          return true;
+        },
+        child: SafeArea(
+          child: SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const StanderAppBar(title: 'Location'),
+                const SizedBox(height: 30),
+                Expanded(
+                  child: GetBuilder<LocationViewModel>(
+                    init: Get.put<LocationViewModel>(
+                      LocationViewModel(
+                        locationRepository: const LocationTest(),
+                      ),
                     ),
-                  ),
-                  builder: (controller) => controller.userLocationLength > 0
-                      ? ListView.builder(
-                          itemCount: controller.userLocationLength,
-                          itemBuilder: (context, index) =>
-                              GetBuilder<LocationViewModel>(
-                            id: controller.locationControllerId(index),
-                            builder: (controller) =>
-                                _locationTitleUi.buildWidget(
-                              locationIndex: index,
-                              title: controller.title(index),
-                              details: controller.addressDetails(index),
-                              isMainLocation: controller.isSelected(index),
+                    builder: (controller) => controller.userLocationLength > 0
+                        ? ListView.builder(
+                            itemCount: controller.userLocationLength,
+                            itemBuilder: (context, index) =>
+                                GetBuilder<LocationViewModel>(
+                              id: controller.locationControllerId(index),
+                              builder: (controller) =>
+                                  _locationTitleUi.buildWidget(
+                                locationIndex: index,
+                                title: controller.title(index),
+                                details: controller.addressDetails(index),
+                                isMainLocation: controller.isSelected(index),
+                              ),
+                            ),
+                          )
+                        : const Center(
+                            child: Text(
+                              'No location added',
+                              style: TextStyle(
+                                fontSize: 28,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        )
-                      : const Center(
-                          child: Text(
-                            'No location added',
-                            style: TextStyle(
-                              fontSize: 28,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                  ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(right: 15, bottom: 24),
-                child: ElevatedButton.icon(
-                  onPressed: () => _showBottomSheet(null),
-                  icon: LocationBottomSheetConfiguration.addIcon,
-                  label: const Text('ADD'),
-                  style: LocationBottomSheetConfiguration
-                      .mainActionElevatedButtonStyle
-                      .copyWith(
-                    fixedSize: const MaterialStatePropertyAll<Size>(
-                      Size(140, 70),
+                Container(
+                  width: double.infinity,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 15, bottom: 24),
+                  child: ElevatedButton.icon(
+                    onPressed: () => _showBottomSheet(null),
+                    icon: LocationBottomSheetConfiguration.addIcon,
+                    label: const Text('ADD'),
+                    style: LocationBottomSheetConfiguration
+                        .mainActionElevatedButtonStyle
+                        .copyWith(
+                      fixedSize: const MaterialStatePropertyAll<Size>(
+                        Size(140, 70),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
