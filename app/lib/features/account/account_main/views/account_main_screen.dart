@@ -41,31 +41,37 @@ class AccountMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: applicationNavBar,
-      body: SafeArea(
-        child: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              const SizedBox(height: 50),
-              ProfileAccountCard.createUi(),
-              const SizedBox(height: 50),
-              Expanded(
-                child: ListView(
-                  children: [
-                    for (final AccountTitleTapUi accountWidget
-                        in _accountWidget)
-                      accountWidget.createUi(_onTapMethod),
-                  ],
+      body: WillPopScope(
+        onWillPop: () async {
+          bottomNavBarController.popAction();
+          return true;
+        },
+        child: SafeArea(
+          child: SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                const SizedBox(height: 50),
+                ProfileAccountCard.createUi(),
+                const SizedBox(height: 50),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      for (final AccountTitleTapUi accountWidget
+                          in _accountWidget)
+                        accountWidget.createUi(_onTapMethod),
+                    ],
+                  ),
                 ),
-              ),
-              // const SizedBox(height: double.infinity * 0.0625),
-              _logOutTap.createUi(_onTapMethod),
-              const SizedBox(height: 25),
-            ],
+                // const SizedBox(height: double.infinity * 0.0625),
+                _logOutTap.createUi(_onTapMethod),
+                const SizedBox(height: 25),
+              ],
+            ),
           ),
         ),
       ),

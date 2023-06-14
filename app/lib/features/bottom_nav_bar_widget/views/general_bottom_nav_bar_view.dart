@@ -15,7 +15,7 @@ class GeneralBottomNavBarView extends StatelessWidget {
       title: 'Explore',
       iconPath: 'assets/icons/explore_icon.png',
       // FIXME: Navigation route must change to explore path.
-      navigationRoute: RoutesName.profile,
+      navigationRoute: RoutesName.exploreHome,
     ),
     GeneralBottomNavBarUi(
       title: 'Cart',
@@ -43,21 +43,22 @@ class GeneralBottomNavBarView extends StatelessWidget {
         ),
       ),
       child: GetBuilder<GeneralBottomNavBarViewModel>(
-          builder: (bottomNavBarController) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            for (final GeneralBottomNavBarUi bottomNavBarItem
-                in _bottomNavBarItems)
-              bottomNavBarItem.createBottomNavBarItem(
-                isSelected: bottomNavBarController.isSelectedItem,
-                onTapMethod: bottomNavBarController.pushNewRoute,
-              )
-          ],
-        );
-      }),
+        builder: (bottomNavBarController) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              for (final GeneralBottomNavBarUi bottomNavBarItem
+                  in _bottomNavBarItems)
+                bottomNavBarItem.createBottomNavBarItem(
+                  isSelected: bottomNavBarController.isSelectedItem,
+                  onTapMethod: bottomNavBarController.pushNewRoute,
+                )
+            ],
+          );
+        },
+      ),
     );
   }
 }

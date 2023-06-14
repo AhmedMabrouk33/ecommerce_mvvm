@@ -9,8 +9,7 @@ class GeneralBottomNavBarViewModel extends GetxController {
 
   @override
   void onInit() {
-    // FIXME: Initial route must be export route name.
-    currentRoute = RoutesName.account;
+    currentRoute = RoutesName.exploreHome;
     super.onInit();
   }
 
@@ -20,7 +19,9 @@ class GeneralBottomNavBarViewModel extends GetxController {
     if (newRoute != currentRoute) {
       currentRoute = newRoute;
       // FIXME: Check if selected item is explore item pop all screen until explore page,
-      Get.toNamed(newRoute);
+      (currentRoute != RoutesName.exploreHome)
+          ? Get.toNamed(newRoute)
+          : Get.until((route) => route.isFirst);
       update();
     }
   }

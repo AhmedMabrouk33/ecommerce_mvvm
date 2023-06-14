@@ -44,7 +44,7 @@ class GeneralBottomNavBarUi {
                     width: 10,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ),
                 ],

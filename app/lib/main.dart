@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       ),
       title: 'e-commerce MVVM',
       getPages: RoutesPage.pages,
-      initialRoute: RoutesName.account,
+      initialRoute: RoutesName.exploreHome,
     );
   }
 }
