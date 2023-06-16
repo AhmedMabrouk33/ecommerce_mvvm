@@ -9,15 +9,14 @@ import './product_details_view_model.dart';
 
 import '../../../core/routes/routes_name.dart';
 
+import '../configurations/controller_tags.dart';
+
 class ExploreViewModel extends GetxController {
   List<CategoryModel> categoriesItem = [];
   List<ProductModel> _productItems = [];
   List<ProductModel> _bestSellingItems = [];
 
   bool showBottomNavBar = false;
-
-  String bestSellingControllerTag = 'Best-Selling-';
-  String productControllerTag = 'Product-';
 
   Future<void> prepareData() async {
     return await Future.wait(
@@ -32,7 +31,7 @@ class ExploreViewModel extends GetxController {
         _bestSellingItems = [...responseValue[1] as List<ProductModel>];
         // _productItems = [...responseValue.last as List<ProductModel>];
         showBottomNavBar = true;
-        update(['explore_bottom_nav_bar']);
+        update([exploreBottomNavBarTag]);
       },
     ).catchError(
       (errorResponse) {
@@ -43,10 +42,10 @@ class ExploreViewModel extends GetxController {
   }
 
   void rebuildScreen() {
-    update(['Main-Explore-Controller']);
+    update([mainExploreControllerTag]);
   }
 
-  void pushCategoryPage(String categoryTitle) {}
+  void pushCategoryPage(String categoryTitle, {bool isBetsSelling = false}) {}
 
   int _findProductIndex(String productId, {bool isBestSellingProduct = false}) {
     return !isBestSellingProduct
@@ -84,12 +83,10 @@ class ExploreViewModel extends GetxController {
     Get.toNamed(RoutesName.productDetailsExplore);
   }
 
-  void rebuildProduct(int productIndex, bool isBestSelling) {
+  void rebuildProduct(int productIndex) {
     update(
       [
-        !isBestSelling
-            ? (bestSellingControllerTag + _bestSellingItems[productIndex].id)
-            : productControllerTag + _productItems[productIndex].id
+        bestSellingControllerTag + _bestSellingItems[productIndex].id,
       ],
     );
   }

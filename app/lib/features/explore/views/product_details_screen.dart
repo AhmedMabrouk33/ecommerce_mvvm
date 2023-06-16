@@ -7,6 +7,8 @@ import '../ui/product_amount_ui.dart';
 
 import '../../../utils/widgets/app_bar/sticky_app_bar.dart';
 
+import '../configurations/controller_tags.dart';
+
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key});
 
@@ -121,7 +123,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         GetBuilder<ProductDetailsViewModel>(
-                          id: controller.amountSectionControllerID,
+                          id: amountSectionControllerTag,
                           builder: (controller) {
                             print('Ammount can be rebuild');
                             return ProductAmountUi.showAmountAction(

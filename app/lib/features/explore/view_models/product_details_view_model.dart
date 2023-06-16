@@ -4,6 +4,10 @@ import '../models/product_model.dart';
 
 import './explore_view_model.dart';
 
+import '../configurations/controller_tags.dart';
+
+import '../configurations/update_product_controller.dart';
+
 class ProductDetailsViewModel extends GetxController {
   final ProductModel productDetails;
   final bool isBestSelling;
@@ -15,26 +19,26 @@ class ProductDetailsViewModel extends GetxController {
     this.isBestSelling = false,
   });
 
-  final String amountSectionControllerID = 'amount-controller';
-
   int get productAmount => productDetails.productCartModel.cart;
 
   void incrementProductAmount() {
     if (productDetails.productCartModel.cart == 0) {
       productDetails.productCartModel.state = 'cart';
 
-      // TODO: Check if Category product view model is saved in controller or not.
-      Get.find<ExploreViewModel>().rebuildProduct(productIndex, isBestSelling);
+      !isBestSelling
+          ? UpdateProductControllers.updateRegularProduct(productIndex)
+          : UpdateProductControllers.updateBestSelling(productIndex);
     }
     productDetails.productCartModel.cart =
         productDetails.productCartModel.cart + 1;
 
-    productDetails.productCartModel.totalPrice += productDetails.price;
+    productDetails.productCartModel.totalPrice =
+        productDetails.productCartModel.totalPrice + productDetails.price;
 
-    update([amountSectionControllerID]);
+    update([amountSectionControllerTag]);
 
     print('Product Cart is ${productDetails.productCartModel.cart}');
-    print('Product price is ${productDetails.price}');
+    print('Product price is ${productDetails.productCartModel.totalPrice}');
   }
 
   void decrementProductAmount() {
@@ -46,10 +50,12 @@ class ProductDetailsViewModel extends GetxController {
 
     if (productDetails.productCartModel.cart == 0) {
       productDetails.productCartModel.state = '';
-      // TODO: Check if Category product view model is saved in controller or not.
-      Get.find<ExploreViewModel>().rebuildProduct(productIndex, isBestSelling);
+
+      !isBestSelling
+          ? UpdateProductControllers.updateRegularProduct(productIndex)
+          : UpdateProductControllers.updateBestSelling(productIndex);
     }
 
-    update([amountSectionControllerID]);
+    update([amountSectionControllerTag]);
   }
 }

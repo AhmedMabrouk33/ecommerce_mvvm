@@ -11,6 +11,8 @@ import '../../../utils/widgets/grid_view/custom_grid_view_widget.dart';
 
 import '../../../core/ui/universal_ui.dart';
 
+import '../configurations/controller_tags.dart';
+
 class HomeExploreScreen extends StatelessWidget {
   const HomeExploreScreen({super.key});
 
@@ -147,7 +149,7 @@ class HomeExploreScreen extends StatelessWidget {
                       for (var productItem
                           in controller.getExploreBestSellingProduct())
                         GetBuilder<ExploreViewModel>(
-                          id: controller.bestSellingControllerTag +
+                          id: bestSellingControllerTag +
                               productItem.id,
                           builder: (_) => ProductItemUi.createProductItem(
                             productModel: productItem,
