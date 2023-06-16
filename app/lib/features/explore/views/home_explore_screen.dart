@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../view_models/explore_view_model.dart';
 
 import '../ui/category_item_ui.dart';
+import '../ui/product_item_ui.dart';
 
 import '../../../utils/widgets/grid_view/custom_grid_view_configuration.dart';
 import '../../../utils/widgets/grid_view/custom_grid_view_widget.dart';
@@ -13,12 +14,24 @@ import '../../../core/ui/universal_ui.dart';
 class HomeExploreScreen extends StatelessWidget {
   const HomeExploreScreen({super.key});
 
-  final CustomGridViewWidget _gridViewWidget = const CustomGridViewWidget(
+  final CustomGridViewWidget _categoryGridViewWidget =
+      const CustomGridViewWidget(
     customGridViewConfiguration: CustomGridViewConfiguration(
       crossItemCount: 1,
       crossAxialSpacing: 15,
       mainAxialSpacing: 15,
       crossRatio: 1.25,
+      scrollingAxis: Axis.horizontal,
+    ),
+  );
+
+  final CustomGridViewWidget _bestSellingGridViewWidget =
+      const CustomGridViewWidget(
+    customGridViewConfiguration: CustomGridViewConfiguration(
+      crossItemCount: 1,
+      crossAxialSpacing: 15,
+      mainAxialSpacing: 15,
+      crossRatio: 800 / 360,
       scrollingAxis: Axis.horizontal,
     ),
   );
@@ -37,19 +50,22 @@ class HomeExploreScreen extends StatelessWidget {
               ),
       ),
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: GetBuilder<ExploreViewModel>(
-          id: 'Main-Explore-Controller',
-          dispose: (_) => Get.delete<ExploreViewModel>(),
-          builder: (controller) => FutureBuilder(
-            future: controller.prepareData(),
-            builder: (context, snapshot) {
-              return snapshot.connectionState == ConnectionState.waiting
-                  ? _waitingWidgets()
-                  : snapshot.error == null
-                      ? _mainScreenWidgets()
-                      : _errorWidget(snapshot.error.toString());
-            },
+      body: WillPopScope(
+        onWillPop: () async => false,
+        child: SafeArea(
+          child: GetBuilder<ExploreViewModel>(
+            id: 'Main-Explore-Controller',
+            dispose: (_) => Get.delete<ExploreViewModel>(),
+            builder: (controller) => FutureBuilder(
+              future: controller.prepareData(),
+              builder: (context, snapshot) {
+                return snapshot.connectionState == ConnectionState.waiting
+                    ? _waitingWidgets()
+                    : snapshot.error == null
+                        ? _mainScreenWidgets()
+                        : _errorWidget(snapshot.error.toString());
+              },
+            ),
           ),
         ),
       ),
@@ -83,7 +99,7 @@ class HomeExploreScreen extends StatelessWidget {
                 SizedBox(
                   height: 90,
                   width: double.infinity,
-                  child: _gridViewWidget.buildGridViewWidget(
+                  child: _categoryGridViewWidget.buildGridViewWidget(
                     [
                       for (var categoryModel in controller.categoriesItem)
                         CategoryItemUi.createCategoryItem(
@@ -123,7 +139,23 @@ class HomeExploreScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 31),
-                // Expanded(child: child)
+                SizedBox(
+                  height: 330,
+                  width: double.infinity,
+                  child: _bestSellingGridViewWidget.buildGridViewWidget(
+                    [
+                      for (var productItem
+                          in controller.getExploreBestSellingProduct())
+                        GetBuilder<ExploreViewModel>(
+                          id: 'Best-Selling-${productItem.id}',
+                          builder: (_) => ProductItemUi.createProductItem(
+                            productModel: productItem,
+                            onTapMethod: controller.pushProductDetails,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
               ],
             );
           },
@@ -163,6 +195,7 @@ class HomeExploreScreen extends StatelessWidget {
       height: double.infinity,
       width: double.infinity,
       color: Colors.red,
+      padding: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,6 +203,7 @@ class HomeExploreScreen extends StatelessWidget {
         children: [
           Text(
             errorMessage,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w500,
