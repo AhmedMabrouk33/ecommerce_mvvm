@@ -37,6 +37,24 @@ class ProductItemUi {
                       )
                     : null,
               ),
+              alignment: Alignment.topRight,
+              child: productModel.productCartModel.cart > 0
+                  ? Container(
+                      height: 20,
+                      width: 75,
+                      color: Colors.red,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'In Cart',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  : null,
             ),
             const SizedBox(height: 10),
             Text(

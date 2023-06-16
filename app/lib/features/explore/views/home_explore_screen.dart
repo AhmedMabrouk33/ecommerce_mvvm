@@ -147,10 +147,12 @@ class HomeExploreScreen extends StatelessWidget {
                       for (var productItem
                           in controller.getExploreBestSellingProduct())
                         GetBuilder<ExploreViewModel>(
-                          id: 'Best-Selling-${productItem.id}',
+                          id: controller.bestSellingControllerTag +
+                              productItem.id,
                           builder: (_) => ProductItemUi.createProductItem(
                             productModel: productItem,
-                            onTapMethod: controller.pushProductDetails,
+                            onTapMethod:
+                                controller.pushExploreBestSellingProductDetails,
                           ),
                         ),
                     ],
