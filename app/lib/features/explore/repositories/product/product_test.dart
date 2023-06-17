@@ -8,7 +8,7 @@ class ProductTest implements ProductRepository {
   @override
   Future<List<ProductModel>> fetchAllProduct() async {
     await Future.delayed(const Duration(seconds: 5));
-    
+
     List<Map<String, dynamic>> productsResponse = [
       {
         "id": 1,
@@ -228,7 +228,7 @@ class ProductTest implements ProductRepository {
       for (final Map<String, dynamic> productJson in productsResponse)
         ProductModel.fromJson(productJson),
     ];
-    throw 'There is error in Product Fetch\n Please try again';
+    // throw 'There is error in Product Fetch\n Please try again';
   }
 
   @override

@@ -6,6 +6,7 @@ import '../models/product_model.dart';
 import '../../../core/data/repository_configuration.dart';
 
 import './product_details_view_model.dart';
+import './category_product_view_model.dart';
 
 import '../../../core/routes/routes_name.dart';
 
@@ -17,6 +18,12 @@ class ExploreViewModel extends GetxController {
   List<ProductModel> _bestSellingItems = [];
 
   bool showBottomNavBar = false;
+
+  @override
+  void onClose() {
+    print('Explore view model is closed');
+    super.onClose();
+  }
 
   Future<void> prepareData() async {
     return await Future.wait(
@@ -45,7 +52,20 @@ class ExploreViewModel extends GetxController {
     update([mainExploreControllerTag]);
   }
 
-  void pushCategoryPage(String categoryTitle, {bool isBetsSelling = false}) {}
+  void pushCategoryPage(String categoryTitle, {bool isBetsSelling = false}) {
+    Get.put<CategoryProductViewModel>(
+      CategoryProductViewModel(
+        screenTitle: categoryTitle,
+        productItems: !isBetsSelling
+            ? _productItems
+                .where((productItem) => productItem.category == categoryTitle)
+                .toList()
+            : _bestSellingItems,
+      ),
+    );
+
+    Get.toNamed(RoutesName.categoryProductExplore);
+  }
 
   int _findProductIndex(String productId, {bool isBestSellingProduct = false}) {
     return !isBestSellingProduct
@@ -84,6 +104,7 @@ class ExploreViewModel extends GetxController {
   }
 
   void rebuildProduct(int productIndex) {
+    print('Product index is $productIndex');
     update(
       [
         bestSellingControllerTag + _bestSellingItems[productIndex].id,

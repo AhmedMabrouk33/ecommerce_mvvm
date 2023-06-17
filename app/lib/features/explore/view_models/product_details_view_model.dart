@@ -2,8 +2,6 @@ import 'package:get/get.dart';
 
 import '../models/product_model.dart';
 
-import './explore_view_model.dart';
-
 import '../configurations/controller_tags.dart';
 
 import '../configurations/update_product_controller.dart';
@@ -18,6 +16,13 @@ class ProductDetailsViewModel extends GetxController {
     required this.productIndex,
     this.isBestSelling = false,
   });
+
+  @override
+  void onClose() {
+    print('The View model is closed');
+    // Get.delete<ProductDetailsViewModel>();
+    super.onClose();
+  }
 
   int get productAmount => productDetails.productCartModel.cart;
 

@@ -1,8 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 
 import '../configurations/controller_tags.dart';
 import '../models/product_model.dart';
+
+import './product_details_view_model.dart';
+
+import '../../../core/routes/routes_name.dart';
 
 class CategoryProductViewModel extends GetxController {
   final List<ProductModel> productItems;
@@ -17,7 +20,22 @@ class CategoryProductViewModel extends GetxController {
     this.isBestSelling = false,
   });
 
-  void rebuildProduct(int productIndex) {
+  void showProductDetailsScreen(String productId) {
+    final int productIndex =
+        productItems.indexWhere((productItem) => productItem.id == productId);
+
+    Get.put<ProductDetailsViewModel>(
+      ProductDetailsViewModel(
+        productDetails: productItems[productIndex],
+        productIndex: productIndex,
+        isBestSelling: isBestSelling,
+      ),
+    );
+
+    Get.toNamed(RoutesName.productDetailsExplore);
+  }
+
+  void updateProductUi(int productIndex) {
     update(
       [
         productControllerTag + productItems[productIndex].id,

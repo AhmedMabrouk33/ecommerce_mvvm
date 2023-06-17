@@ -126,7 +126,10 @@ class HomeExploreScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => controller.pushCategoryPage(
+                        'Best Selling',
+                        isBetsSelling: true,
+                      ),
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(
                           fontSize: 18,
@@ -149,8 +152,7 @@ class HomeExploreScreen extends StatelessWidget {
                       for (var productItem
                           in controller.getExploreBestSellingProduct())
                         GetBuilder<ExploreViewModel>(
-                          id: bestSellingControllerTag +
-                              productItem.id,
+                          id: bestSellingControllerTag + productItem.id,
                           builder: (_) => ProductItemUi.createProductItem(
                             productModel: productItem,
                             onTapMethod:
