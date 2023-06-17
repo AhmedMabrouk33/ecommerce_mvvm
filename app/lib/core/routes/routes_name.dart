@@ -1,6 +1,7 @@
 class RoutesName {
   // ********* * Explore Features. ************ /
   static const String exploreHome = '/explore';
+  static const String categoryProductExplore = '/explore/category-product';
   static const String productDetailsExplore = '/explore/product-details';
 
   // ********* * Account Features. ************ /

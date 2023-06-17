@@ -11,6 +11,7 @@ import '../../features/account/account_main/views/account_main_screen.dart';
 import '../../features/account/profile/views/profile_screen.dart';
 import '../../features/account/location/views/location_screen.dart';
 import '../../features/explore/views/product_details_screen.dart';
+import '../../features/explore/views/category_product_screen.dart';
 
 class RoutesPage {
   static List<GetPage<void>> pages = [
@@ -21,6 +22,11 @@ class RoutesPage {
       binding: BindingsBuilder(
         () => Get.lazyPut(() => ExploreViewModel()),
       ),
+    ),
+
+    GetPage(
+      name: RoutesName.categoryProductExplore,
+      page: () => const CategoryProductScreen(),
     ),
 
     GetPage(
