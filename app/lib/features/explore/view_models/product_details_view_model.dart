@@ -33,7 +33,13 @@ class ProductDetailsViewModel extends GetxController {
   @override
   void onClose() {
     print('On close is called');
-
+    print('The Product state is ' + _selectedProduct.productCartModel.state);
+    if (_selectedProduct.productCartModel.state == productCartState) {
+      !cartProducts.contains(_selectedProduct)
+          ? cartProducts.add(_selectedProduct)
+          : null;
+    }
+    print('Product Cart length is ' + cartProducts.length.toString());
     super.onClose();
   }
 

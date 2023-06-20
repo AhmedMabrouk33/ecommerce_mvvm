@@ -7,6 +7,10 @@ import '../../features/explore/view_models/explore_view_model.dart';
 
 import '../../features/explore/views/home_explore_screen.dart';
 
+import '../../features/cart/cart_preview/view_model/cart_view_model.dart';
+
+import '../../features/cart/cart_preview/views/cart_screen.dart';
+
 import '../../features/account/account_main/views/account_main_screen.dart';
 import '../../features/account/profile/views/profile_screen.dart';
 import '../../features/account/location/views/location_screen.dart';
@@ -32,6 +36,15 @@ class RoutesPage {
     GetPage(
       name: RoutesName.productDetailsExplore,
       page: () => const ProductDetailsScreen(),
+    ),
+
+    // ********* * Cart Features. ************ /
+    GetPage(
+      name: RoutesName.cartHome,
+      page: () => const CartScreen(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut(() => CartViewModel()),
+      ),
     ),
 
     // ********* * Account Features. ************ /

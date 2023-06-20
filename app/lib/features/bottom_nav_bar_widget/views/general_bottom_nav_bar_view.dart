@@ -19,8 +19,7 @@ class GeneralBottomNavBarView extends StatelessWidget {
     GeneralBottomNavBarUi(
       title: 'Cart',
       iconPath: 'assets/icons/cart_icon.png',
-      // FIXME: Navigation route must change to cart path.
-      navigationRoute: RoutesName.myLocation,
+      navigationRoute: RoutesName.cartHome,
     ),
     GeneralBottomNavBarUi(
       title: 'Account',

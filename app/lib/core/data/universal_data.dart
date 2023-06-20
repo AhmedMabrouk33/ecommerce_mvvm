@@ -38,3 +38,5 @@ List<LocationModel> userLocations = [
 List<ProductModel> products = [];
 
 List<ProductModel> bestSellingProducts = [];
+
+List<ProductModel> cartProducts = [];
