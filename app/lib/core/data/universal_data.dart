@@ -1,6 +1,8 @@
 import '../../features/account/profile/models/profile_model.dart';
 import '../../features/account/location/models/location_model.dart';
 
+import '../../features/explore/models/product_model.dart';
+
 ProfileModel userData = ProfileModel(
   id: 0,
   userName: 'Ahmed mohamed mabrouk',
@@ -32,3 +34,7 @@ List<LocationModel> userLocations = [
     isMainAddress: true,
   ),
 ];
+
+List<ProductModel> products = [];
+
+List<ProductModel> bestSellingProducts = [];

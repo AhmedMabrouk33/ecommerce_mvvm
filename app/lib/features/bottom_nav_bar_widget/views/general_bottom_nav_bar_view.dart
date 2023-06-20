@@ -14,7 +14,6 @@ class GeneralBottomNavBarView extends StatelessWidget {
     GeneralBottomNavBarUi(
       title: 'Explore',
       iconPath: 'assets/icons/explore_icon.png',
-      // FIXME: Navigation route must change to explore path.
       navigationRoute: RoutesName.exploreHome,
     ),
     GeneralBottomNavBarUi(

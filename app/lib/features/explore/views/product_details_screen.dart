@@ -28,7 +28,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   StickyAppBar.buildAppBar(
-                    imageNetworkUrl: controller.productDetails.image,
+                    imageNetworkUrl: controller.productImage,
                     popAction: Get.back,
                     favouriteAction: () {},
                     isFavourite: false,
@@ -39,7 +39,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           const EdgeInsets.only(top: 8, left: 16, right: 10),
                       children: [
                         Text(
-                          controller.productDetails.title,
+                          controller.productTitle,
                           style: const TextStyle(
                             fontSize: 26,
                             color: Colors.black,
@@ -57,7 +57,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 15),
                         Text(
-                          controller.productDetails.details,
+                          controller.productDetailsText,
                           style: const TextStyle(
                             height: 1.5,
                             fontSize: 16,
@@ -68,7 +68,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Spacer(),
+                  const SizedBox(height: 30),
                   Container(
                     height: 84,
                     width: double.infinity,
@@ -112,7 +112,7 @@ class ProductDetailsScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                '\$ ${controller.productDetails.price}',
+                                '\$ ${controller.productPrice}',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   color: Color(0xff00C569),
@@ -127,7 +127,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           builder: (controller) {
                             print('Ammount can be rebuild');
                             return ProductAmountUi.showAmountAction(
-                              amount: controller.productAmount,
+                              amount: controller.productCartAmount,
                               incrementAction:
                                   controller.incrementProductAmount,
                               decrementAction:

@@ -25,7 +25,7 @@ class RoutesPage {
     ),
 
     GetPage(
-      name: RoutesName.categoryProductExplore,
+      name: RoutesName.categoryProductsExplore,
       page: () => const CategoryProductScreen(),
     ),
 

@@ -12,10 +12,10 @@ import '../../../core/routes/routes_name.dart';
 
 import '../configurations/controller_tags.dart';
 
+import '../../../core/data/universal_data.dart';
+
 class ExploreViewModel extends GetxController {
   List<CategoryModel> categoriesItem = [];
-  List<ProductModel> _productItems = [];
-  List<ProductModel> _bestSellingItems = [];
 
   bool showBottomNavBar = false;
 
@@ -30,13 +30,13 @@ class ExploreViewModel extends GetxController {
       [
         ApplicationRepositories.categoryRepository.fetchAllCategory(),
         ApplicationRepositories.productRepository.fetchBestSellingProducts(),
-        // ApplicationRepositories.productRepository.fetchAllProduct(),
+        ApplicationRepositories.productRepository.fetchAllProduct(),
       ],
     ).then(
       (responseValue) {
         categoriesItem = [...responseValue.first as List<CategoryModel>];
-        _bestSellingItems = [...responseValue[1] as List<ProductModel>];
-        // _productItems = [...responseValue.last as List<ProductModel>];
+        bestSellingProducts = [...responseValue[1] as List<ProductModel>];
+        products = [...responseValue.last as List<ProductModel>];
         showBottomNavBar = true;
         update([exploreBottomNavBarTag]);
       },
@@ -52,50 +52,40 @@ class ExploreViewModel extends GetxController {
     update([mainExploreControllerTag]);
   }
 
-  void pushCategoryPage(String categoryTitle, {bool isBetsSelling = false}) {
+  List<ProductModel> get exploreBestSellingProduct {
+    print('The best Selling product Length ${bestSellingProducts.length}');
+    // TODO: The best Sellling in explore screen will be 4 products only from all best selling products.
+    return [
+      for (int index = 0; index < maxExploreBestSellingProductLength; index++)
+        bestSellingProducts[index],
+    ];
+  }
+
+  void navigateToCategoryProductsScreen(
+    String categoryTitle, {
+    bool isBetsSelling = false,
+  }) {
     Get.put<CategoryProductViewModel>(
       CategoryProductViewModel(
         screenTitle: categoryTitle,
         productItems: !isBetsSelling
-            ? _productItems
+            ? products
                 .where((productItem) => productItem.category == categoryTitle)
                 .toList()
-            : _bestSellingItems,
+            : bestSellingProducts,
+        isBestSelling: isBetsSelling,
       ),
     );
 
-    Get.toNamed(RoutesName.categoryProductExplore);
+    Get.toNamed(RoutesName.categoryProductsExplore);
   }
 
-  int _findProductIndex(String productId, {bool isBestSellingProduct = false}) {
-    return !isBestSellingProduct
-        ? _bestSellingItems
-            .indexWhere((productItem) => productItem.id == productId)
-        : _bestSellingItems
-            .indexWhere((productItem) => productItem.id == productId);
-  }
-
-  List<ProductModel> getExploreBestSellingProduct() {
-    print('The best Selling product Length ${_bestSellingItems.length}');
-    // TODO: The best Sellling in explore screen will be 4 products only from all best selling products.
-    return [
-      ..._bestSellingItems,
-      ..._bestSellingItems,
-      ..._bestSellingItems,
-      ..._bestSellingItems,
-      ..._bestSellingItems,
-    ];
-  }
-
-  void pushExploreBestSellingProductDetails(String productId) {
-    print('Pressed product Id is $productId');
-    var selectedProduct = _bestSellingItems
-        .firstWhere((productItem) => productItem.id == productId);
+  void navigateToProductDetailsScreen(ProductModel selectedProduct) {
+    // print('Pressed product Id is $productId');
 
     Get.put<ProductDetailsViewModel>(
       ProductDetailsViewModel(
-        productDetails: selectedProduct,
-        productIndex: _findProductIndex(productId),
+        productIndex: selectedProduct.productGlobalIndex,
         isBestSelling: true,
       ),
     );
@@ -103,11 +93,11 @@ class ExploreViewModel extends GetxController {
     Get.toNamed(RoutesName.productDetailsExplore);
   }
 
-  void rebuildProduct(int productIndex) {
-    print('Product index is $productIndex');
+  void rebuildProduct(String productID) {
+    print('Product index is $productID');
     update(
       [
-        bestSellingControllerTag + _bestSellingItems[productIndex].id,
+        bestSellingControllerTag + productID,
       ],
     );
   }

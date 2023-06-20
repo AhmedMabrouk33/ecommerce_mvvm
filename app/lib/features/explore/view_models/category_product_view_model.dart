@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../configurations/controller_tags.dart';
+
 import '../models/product_model.dart';
 
 import './product_details_view_model.dart';
@@ -17,17 +18,17 @@ class CategoryProductViewModel extends GetxController {
   CategoryProductViewModel({
     required this.productItems,
     required this.screenTitle,
-    this.isBestSelling = false,
+    required this.isBestSelling,
   });
 
-  void showProductDetailsScreen(String productId) {
-    final int productIndex =
-        productItems.indexWhere((productItem) => productItem.id == productId);
+  void showProductDetailsScreen(ProductModel selectedProduct) {
+    // final int productIndex = productItems
+    //     .indexWhere((productItem) => productItem.id == selectedProduct);
 
     Get.put<ProductDetailsViewModel>(
       ProductDetailsViewModel(
-        productDetails: productItems[productIndex],
-        productIndex: productIndex,
+        // productDetails: selectedProduct,
+        productIndex: selectedProduct.productGlobalIndex,
         isBestSelling: isBestSelling,
       ),
     );
@@ -35,10 +36,10 @@ class CategoryProductViewModel extends GetxController {
     Get.toNamed(RoutesName.productDetailsExplore);
   }
 
-  void updateProductUi(int productIndex) {
+  void updateProductUi(String productID) {
     update(
       [
-        productControllerTag + productItems[productIndex].id,
+        productControllerTag + productID,
       ],
     );
   }

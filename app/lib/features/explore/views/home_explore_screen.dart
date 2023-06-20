@@ -106,7 +106,8 @@ class HomeExploreScreen extends StatelessWidget {
                       for (var categoryModel in controller.categoriesItem)
                         CategoryItemUi.createCategoryItem(
                           categoryModel: categoryModel,
-                          onTapMethod: controller.pushCategoryPage,
+                          onTapMethod:
+                              controller.navigateToCategoryProductsScreen,
                         ),
                     ],
                   ),
@@ -126,7 +127,8 @@ class HomeExploreScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => controller.pushCategoryPage(
+                      onPressed: () =>
+                          controller.navigateToCategoryProductsScreen(
                         'Best Selling',
                         isBetsSelling: true,
                       ),
@@ -150,13 +152,13 @@ class HomeExploreScreen extends StatelessWidget {
                   child: _bestSellingGridViewWidget.buildGridViewWidget(
                     [
                       for (var productItem
-                          in controller.getExploreBestSellingProduct())
+                          in controller.exploreBestSellingProduct)
                         GetBuilder<ExploreViewModel>(
                           id: bestSellingControllerTag + productItem.id,
                           builder: (_) => ProductItemUi.createProductItem(
                             productModel: productItem,
                             onTapMethod:
-                                controller.pushExploreBestSellingProductDetails,
+                                controller.navigateToProductDetailsScreen,
                           ),
                         ),
                     ],

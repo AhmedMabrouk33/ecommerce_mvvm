@@ -9,7 +9,7 @@ class ProductTest implements ProductRepository {
   Future<List<ProductModel>> fetchAllProduct() async {
     await Future.delayed(const Duration(seconds: 5));
 
-    List<Map<String, dynamic>> productsResponse = [
+    List<Map<String, dynamic>> productsJson = [
       {
         "id": 1,
         "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -224,16 +224,23 @@ class ProductTest implements ProductRepository {
       }
     ];
 
+    final productItemsLength = productsJson.length;
+
     return [
-      for (final Map<String, dynamic> productJson in productsResponse)
-        ProductModel.fromJson(productJson),
+      for (int index = 0; index < productItemsLength; index++)
+        ProductModel.fromJson(
+          json: productsJson[index],
+          productLocalIndex: index,
+        ),
     ];
+
     // throw 'There is error in Product Fetch\n Please try again';
   }
 
   @override
   Future<List<ProductModel>> fetchBestSellingProducts() async {
     await Future.delayed(const Duration(seconds: 3));
+    
     var bestSellingItemsJson = [
       {
         'id': '1',
@@ -414,8 +421,14 @@ black color''',
         "rating": {"rate": 3.6, "count": 145}
       }
     ];
+
+    final bestSellingItemsLength = bestSellingItemsJson.length;
     return [
-      for (var item in bestSellingItemsJson) ProductModel.fromJson(item),
+      for (int index = 0; index < bestSellingItemsLength; index++)
+        ProductModel.fromJson(
+          json: bestSellingItemsJson[index],
+          productLocalIndex: index,
+        ),
     ];
     // throw 'There is error in Best Selling  Fetch\n Please try again';
   }

@@ -6,61 +6,84 @@ import '../configurations/controller_tags.dart';
 
 import '../configurations/update_product_controller.dart';
 
+import '../configurations/explore_constants.dart';
+
+import '../../../core/data/universal_data.dart';
+
 class ProductDetailsViewModel extends GetxController {
-  final ProductModel productDetails;
   final bool isBestSelling;
   final int productIndex;
 
+  late final ProductModel _selectedProduct;
+
   ProductDetailsViewModel({
-    required this.productDetails,
     required this.productIndex,
     this.isBestSelling = false,
   });
 
   @override
+  void onInit() {
+    _selectedProduct = (!isBestSelling)
+        ? products[productIndex]
+        : bestSellingProducts[productIndex];
+
+    super.onInit();
+  }
+
+  @override
   void onClose() {
-    print('The View model is closed');
-    // Get.delete<ProductDetailsViewModel>();
+    print('On close is called');
+
     super.onClose();
   }
 
-  int get productAmount => productDetails.productCartModel.cart;
-
   void incrementProductAmount() {
-    if (productDetails.productCartModel.cart == 0) {
-      productDetails.productCartModel.state = 'cart';
+    _selectedProduct.productCartModel.cart =
+        _selectedProduct.productCartModel.cart + 1;
 
-      !isBestSelling
-          ? UpdateProductControllers.updateRegularProduct(productIndex)
-          : UpdateProductControllers.updateBestSelling(productIndex);
+    _selectedProduct.productCartModel.totalPrice =
+        _selectedProduct.productCartModel.totalPrice + _selectedProduct.price;
+
+    if (_selectedProduct.productCartModel.cart > 0 &&
+        _selectedProduct.productCartModel.state != productCartState) {
+      _selectedProduct.productCartModel.state = productCartState;
+
+      UpdateProductControllers.updateProductController(
+        isBestSelling,
+        _selectedProduct,
+      );
     }
-    productDetails.productCartModel.cart =
-        productDetails.productCartModel.cart + 1;
-
-    productDetails.productCartModel.totalPrice =
-        productDetails.productCartModel.totalPrice + productDetails.price;
 
     update([amountSectionControllerTag]);
-
-    print('Product Cart is ${productDetails.productCartModel.cart}');
-    print('Product price is ${productDetails.productCartModel.totalPrice}');
   }
 
   void decrementProductAmount() {
-    productDetails.productCartModel.cart =
-        productDetails.productCartModel.cart - 1;
+    _selectedProduct.productCartModel.cart =
+        _selectedProduct.productCartModel.cart - 1;
 
-    productDetails.productCartModel.totalPrice =
-        productDetails.productCartModel.totalPrice - productDetails.price;
+    _selectedProduct.productCartModel.totalPrice =
+        _selectedProduct.productCartModel.totalPrice - _selectedProduct.price;
 
-    if (productDetails.productCartModel.cart == 0) {
-      productDetails.productCartModel.state = '';
+    if (_selectedProduct.productCartModel.cart == 0 &&
+        _selectedProduct.productCartModel.state == productCartState) {
+      _selectedProduct.productCartModel.state = productNormalState;
 
-      !isBestSelling
-          ? UpdateProductControllers.updateRegularProduct(productIndex)
-          : UpdateProductControllers.updateBestSelling(productIndex);
+      UpdateProductControllers.updateProductController(
+        isBestSelling,
+        _selectedProduct,
+      );
     }
 
     update([amountSectionControllerTag]);
   }
+
+  String get productImage => _selectedProduct.image;
+
+  String get productTitle => _selectedProduct.title;
+
+  String get productDetailsText => _selectedProduct.details;
+
+  int get productCartAmount => _selectedProduct.productAmount;
+
+  String get productPrice => _selectedProduct.price.toString();
 }

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class ProfileModel {
   final int id;
   String userName;
@@ -16,10 +15,10 @@ class ProfileModel {
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      id: json['id']??'',
-      userName: json['userName']??'',
-      userEmail: json['userEmail']??'',
-      userPassword: json['userPassword']??'',
+      id: json['id'] ?? '',
+      userName: json['userName'] ?? '',
+      userEmail: json['userEmail'] ?? '',
+      userPassword: json['userPassword'] ?? '',
       userImage: json['userImage'],
     );
   }

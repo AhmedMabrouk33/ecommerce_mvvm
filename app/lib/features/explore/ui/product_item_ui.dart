@@ -5,19 +5,18 @@ import '../models/product_model.dart';
 class ProductItemUi {
   static Widget createProductItem({
     required ProductModel productModel,
-    required void Function(String productId) onTapMethod,
+    required void Function(ProductModel product) onTapMethod,
   }) {
     return SizedBox(
       height: 319,
       width: 164,
       child: InkWell(
-        onTap: () => onTapMethod(productModel.id),
+        onTap: () => onTapMethod(productModel),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            // TODO : when Save in cart show text on image.
             Container(
               height: 240,
               width: 164,
@@ -59,6 +58,8 @@ class ProductItemUi {
             const SizedBox(height: 10),
             Text(
               productModel.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
