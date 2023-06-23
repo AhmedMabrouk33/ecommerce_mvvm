@@ -91,7 +91,7 @@ class LocationViewModel extends GetxController {
   ) async {
     Get.closeCurrentSnackbar();
 
-    await Get.snackbar(
+    Get.snackbar(
       snackbarTitle,
       snackbarMessage ?? 'Waiting to delete selected location',
       duration: snackbarTitle == _DialogTitle.updateTitle

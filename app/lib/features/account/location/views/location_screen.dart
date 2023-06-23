@@ -107,7 +107,6 @@ class LocationScreen extends StatelessWidget {
       isDismissible: true,
       LocationBottomSheetView.build(
         locationIndex: locationIndex,
-        
       ),
     );
   }

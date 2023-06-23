@@ -6,6 +6,8 @@ class RoutesName {
 
   // ********* * Cart Features. ************ /
   static const String cartHome = '/cart';
+  static const String checkOutCart = '/cart/check-out';
+  static const String summaryCart =  '/cart/summary';
 
   // ********* * Account Features. ************ /
   static const String account = '/account';

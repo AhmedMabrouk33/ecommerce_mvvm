@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StanderAppBar extends StatelessWidget {
-  const StanderAppBar({required this.title, super.key});
+  const StanderAppBar({
+    this.showBackIcons = true,
+    required this.title,
+    super.key,
+  });
 
   final String title;
+  final bool showBackIcons;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +27,15 @@ class StanderAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          IconButton(
-            onPressed: Get.back,
-            icon: const Icon(
-              Icons.keyboard_arrow_left_rounded,
-              size: 35.74,
-            ),
-          ),
+          showBackIcons
+              ? IconButton(
+                  onPressed: Get.back,
+                  icon: const Icon(
+                    Icons.keyboard_arrow_left_rounded,
+                    size: 35.74,
+                  ),
+                )
+              : const SizedBox(width: 0),
           Expanded(
             child: Text(
               title,

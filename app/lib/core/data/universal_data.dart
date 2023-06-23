@@ -13,6 +13,7 @@ ProfileModel userData = ProfileModel(
 );
 
 List<LocationModel> userLocations = [
+/*
   LocationModel(
     id: '0',
     title: 'title',
@@ -33,6 +34,7 @@ List<LocationModel> userLocations = [
     area: 'area1',
     isMainAddress: true,
   ),
+*/
 ];
 
 List<ProductModel> products = [];

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/routes_name.dart';
+
 import '../view_model/cart_view_model.dart';
 
 import '../configuration/cart_controller_tag.dart';
@@ -42,7 +44,7 @@ class CartScreen extends StatelessWidget {
                         _noProductWidgets(),
                       ProductPriceCard.buildWidget(
                         mainCartController.totalProductCartLength != 0
-                            ? () {}
+                            ? () => Get.toNamed(RoutesName.checkOutCart)
                             : null,
                       ),
                     ],

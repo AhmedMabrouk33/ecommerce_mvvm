@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../features/cart/summary/views/summary_screen.dart';
 import './routes_name.dart';
 
 import '../../features/account/profile/view_models/profile_view_model.dart';
@@ -8,8 +9,10 @@ import '../../features/explore/view_models/explore_view_model.dart';
 import '../../features/explore/views/home_explore_screen.dart';
 
 import '../../features/cart/cart_preview/view_model/cart_view_model.dart';
+import '../../features/cart/summary/view_models/summary_view_model.dart';
 
 import '../../features/cart/cart_preview/views/cart_screen.dart';
+import '../../features/cart/summary/views/check_out_screen.dart';
 
 import '../../features/account/account_main/views/account_main_screen.dart';
 import '../../features/account/profile/views/profile_screen.dart';
@@ -45,6 +48,19 @@ class RoutesPage {
       binding: BindingsBuilder(
         () => Get.lazyPut(() => CartViewModel()),
       ),
+    ),
+
+    GetPage(
+      name: RoutesName.checkOutCart,
+      page: () => const CheckOutScreen(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut(() => SummaryViewModel()),
+      ),
+    ),
+
+    GetPage(
+      name: RoutesName.summaryCart,
+      page: () => const SummaryScreen(),
     ),
 
     // ********* * Account Features. ************ /

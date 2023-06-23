@@ -47,7 +47,7 @@ class LocationBottomSheetViewModel extends GetxController {
     } else {
       bottomSheetTitle = LocationBottomSheetText.newBottomSheetText;
       title = buildingNo = flatNo = street = city = area = '';
-      _isMainLocation = false;
+      _isMainLocation = userLocations.isEmpty ? true : false;
     }
     super.onInit();
   }
